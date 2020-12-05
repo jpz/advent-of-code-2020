@@ -33,7 +33,8 @@ int main() {
     }
   }
 
-  // note the int64_t is important otherwise we get an int32_t reducer and overflow
+  // note the int64_t is important otherwise we get an int32_t reducer and
+  // overflow
   auto product = std::accumulate(tree_encounters.begin(), tree_encounters.end(),
                                  int64_t{1}, std::multiplies<>());
 
