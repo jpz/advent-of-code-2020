@@ -4,10 +4,7 @@ set(CMAKE_CXX_STANDARD 17)
 
 project(AdventOfCode2020)
 
-# copy data/* files to build directory
-file(GLOB DATAFILES data/*)
-file(COPY ${DATAFILES} DESTINATION .)
-
+set(CMAKE_RUNTIME_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR}/bin)
 
 add_executable(day1a src/day1a.cpp)
 add_executable(day1b src/day1b.cpp)
