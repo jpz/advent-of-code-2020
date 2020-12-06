@@ -1,6 +1,7 @@
 #include <fstream>
 #include <iostream>
 #include <string>
+#include <unordered_set>
 
 int row(const std::string &ticket) {
   int accum = 0;
@@ -28,11 +29,22 @@ int main() {
   auto str = std::ifstream{"data5.txt"};
   auto s = std::string{};
 
-  auto max_id = 0;
+  auto ids = std::unordered_set<int>{};
+  auto min_id = std::numeric_limits<int>::max();
+  auto max_id = std::numeric_limits<int>::min();
 
   while (str >> s) {
-    max_id = std::max(max_id, row(s) * 8 + column(s));
+    auto id = row(s) * 8 + column(s);
+    ids.insert(id);
+    min_id = std::min(min_id, id);
+    max_id = std::max(max_id, id);
   }
-  std::cout << "highest seating ID = " << max_id << std::endl;
+
+  // assuming that there is one id missing between [min_id, max_id]
+  for (auto i = min_id + 1; i < max_id; i++) {
+    if (ids.find(i) == ids.end()) {
+      std::cout << "Missing seat ID = " << i << "\n";
+    }
+  }
   return 0;
 }
