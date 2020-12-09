@@ -76,8 +76,7 @@ int main() {
   };
 
   std::cout << "total bags contained within shiny gold = "
-            << bag_count(root) - 1 << std::endl
-            << std::endl;
+            << bag_count(root) - 1 << std::endl;
 
   return 0;
 }

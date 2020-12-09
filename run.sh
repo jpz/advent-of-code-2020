@@ -9,4 +9,4 @@ do
     echo "$(basename ${file}):"
     (cd "${DIR}/data"; "$file")
     echo "" #-----------"; echo ""
-done
+done | tee outputs.txt

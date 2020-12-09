@@ -1,0 +1,45 @@
+day1a:
+902451
+
+day1b:
+85555470
+
+day2a:
+valid passwords = 569
+
+day2b:
+valid passwords = 346
+
+day3a:
+Trees encountered = 187
+
+day3b:
+Trees encountered product = 4723283400
+
+day4a:
+Valid passport count = 233
+
+day4b:
+Valid passport count = 111
+
+day5a:
+highest seating ID = 926
+
+day5b:
+Missing seat ID = 657
+
+day6a:
+Sum of unique questions in all groups = 6768
+
+day6b:
+Sum of unique questions answered by all, in all groups = 3489
+
+day7a:
+total parents of shiny gold = 316
+
+day7b:
+total bags contained within shiny gold = 11310
+
+day8a:
+Accum value at position of loop = 1262
+
