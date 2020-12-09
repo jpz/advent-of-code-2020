@@ -43,3 +43,6 @@ total bags contained within shiny gold = 11310
 day8a:
 Accum value at position of loop = 1262
 
+day8b:
+accumulator after fix = 1643
+
