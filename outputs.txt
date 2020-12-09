@@ -46,3 +46,9 @@ Accum value at position of loop = 1262
 day8b:
 accumulator after fix = 1643
 
+day9a:
+Number that fails test = 375054920
+
+day9b:
+Sum of min and max that of contiguous sequence = 54142584
+

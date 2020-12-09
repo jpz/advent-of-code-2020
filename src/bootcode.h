@@ -43,6 +43,5 @@ public:
     program[position].opcode = opcode;
   }
 
-  ~AdjustOpcode() { 
-      program_[position_].opcode = std::move(prior_opcode_); }
+  ~AdjustOpcode() { program_[position_].opcode = std::move(prior_opcode_); }
 };

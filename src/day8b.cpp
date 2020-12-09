@@ -1,9 +1,9 @@
 #include "bootcode.h"
 #include <unordered_set>
 
-std::pair<bool, int>
-does_program_terminate(const Program &program,
-                       int starting_location, int starting_accum) {
+std::pair<bool, int> does_program_terminate(const Program &program,
+                                            int starting_location,
+                                            int starting_accum) {
   auto accum = starting_accum;
   auto location = starting_location;
   auto visited_locations = std::unordered_set<int>{};
