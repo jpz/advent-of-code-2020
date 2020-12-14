@@ -26,7 +26,7 @@ int column(const std::string &ticket) {
 }
 
 int main() {
-  auto str = std::ifstream{"data5.txt"};
+  auto str = std::ifstream{"data05.txt"};
   auto s = std::string{};
 
   auto ids = std::unordered_set<int>{};

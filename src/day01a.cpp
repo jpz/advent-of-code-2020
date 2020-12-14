@@ -5,7 +5,7 @@
 
 int main() {
   auto set = std::unordered_set<int>{};
-  auto str = std::ifstream{"data1.txt"};
+  auto str = std::ifstream{"data01.txt"};
   auto i = int{};
 
   while (str >> i && str.good()) {

@@ -7,7 +7,7 @@
 
 int main() {
   auto map = std::vector<std::string>{};
-  auto str = std::ifstream{"data3.txt"};
+  auto str = std::ifstream{"data03.txt"};
   auto row = std::string{};
 
   while (str >> row && str.good()) {

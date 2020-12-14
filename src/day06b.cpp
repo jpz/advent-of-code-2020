@@ -6,7 +6,7 @@
 
 int main() {
   auto questions = std::set<char>{};
-  auto str = std::ifstream{"data6.txt"};
+  auto str = std::ifstream{"data06.txt"};
   auto line = std::string{};
 
   auto sum_of_questions_in_groups = 0;

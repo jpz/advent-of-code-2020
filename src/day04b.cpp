@@ -78,7 +78,7 @@ get_tokens_from_line(const std::string &line) {
 
 int main() {
   auto tokens = std::unordered_map<std::string, std::string>{};
-  auto str = std::ifstream{"data4.txt"};
+  auto str = std::ifstream{"data04.txt"};
   auto line = std::string{};
 
   auto valid_passport_count = 0;

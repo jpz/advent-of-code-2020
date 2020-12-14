@@ -8,7 +8,7 @@ int main() {
   auto singles = std::unordered_set<int>{};
   auto pairs =
       std::unordered_map<int, std::pair<int, int>>{}; // sum -> pair mapping
-  auto str = std::ifstream{"data1.txt"};
+  auto str = std::ifstream{"data01.txt"};
   auto i = int{};
 
   while (str >> i && str.good()) {

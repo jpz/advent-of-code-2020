@@ -25,7 +25,7 @@ std::pair<int, int> find_contiguous_sequence(const std::vector<int> &sequence,
 
 int main() {
   auto sequence = std::vector<int>{};
-  auto str = std::ifstream{"data9.txt"};
+  auto str = std::ifstream{"data09.txt"};
   auto const target = 375054920;
   auto num = 0;
   while (str >> num) {

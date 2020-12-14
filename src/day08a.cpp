@@ -23,7 +23,7 @@ int run_program_until_loop_and_return_accum(const Program &program,
 }
 
 int main() {
-  auto program = read_program("data8.txt");
+  auto program = read_program("data08.txt");
 
   std::cout << "Accum value at position of loop = "
             << run_program_until_loop_and_return_accum(program, 0, 0)

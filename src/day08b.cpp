@@ -24,7 +24,7 @@ std::pair<bool, int> does_program_terminate(const Program &program,
 }
 
 int main() {
-  auto program = read_program("data8.txt");
+  auto program = read_program("data08.txt");
 
   auto result = std::pair<bool, int>{false, 0};
   // result.first indicates whether the program terminated and we're done

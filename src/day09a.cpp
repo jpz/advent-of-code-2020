@@ -38,7 +38,7 @@ int find_first_pos_without_sum_in_lookback(const std::vector<int> &sequence,
 
 int main() {
   auto sequence = std::vector<int>{};
-  auto str = std::ifstream{"data9.txt"};
+  auto str = std::ifstream{"data09.txt"};
   auto const lookback = 25;
   auto num = 0;
   while (str >> num) {
