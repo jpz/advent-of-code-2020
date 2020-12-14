@@ -62,3 +62,6 @@ ways to get to the final voltage = 18512297918464
 day11a:
 Occupied seats = 2359
 
+day11b:
+Occupied seats = 2131
+

@@ -27,5 +27,6 @@ add_executable(day09b src/day09b.cpp)
 add_executable(day10a src/day10a.cpp)
 add_executable(day10b src/day10b.cpp)
 add_executable(day11a src/day11a.cpp)
+add_executable(day11b src/day11b.cpp)
 
 
