@@ -71,3 +71,6 @@ Manhattan distance = 508
 day12b:
 Manhattan distance = 30761
 
+day13a:
+Earliest bus is 601 with waiting time 7, product = 4207
+
