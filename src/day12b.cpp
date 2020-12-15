@@ -10,40 +10,40 @@ int main() {
 
   // let's do directions with a (x,y) vector
   // N is (0, 1), S is (0, -1), E (1, 0), W (-1, 0)
-  auto heading = std::make_pair(1, 0);
   auto position = std::make_pair(0, 0);
+  auto waypoint = std::make_pair(10, 1);
 
   while (std::getline(str, line)) {
     auto command = line[0];
     auto number = std::atoi(line.data() + 1);
     switch (command) {
     case 'N':
-      position.second += number;
+      waypoint.second += number;
       break;
     case 'S':
-      position.second -= number;
+      waypoint.second -= number;
       break;
     case 'E':
-      position.first += number;
+      waypoint.first += number;
       break;
     case 'W':
-      position.first -= number;
+      waypoint.first -= number;
       break;
     case 'F':
-      position.first += heading.first * number;
-      position.second += heading.second * number;
+      position.first += waypoint.first * number;
+      position.second += waypoint.second * number;
       break;
     }
     if (line == "R90" || line == "L270") {
       // clockwise rotation matrix [ [0 1] [-1 0] ]
-      heading = std::make_pair(1 * heading.second, -1 * heading.first);
+      waypoint = std::make_pair(1 * waypoint.second, -1 * waypoint.first);
     }
     if (line == "L90" || line == "R270") {
       // counterclockwise rotation matrix [ [0 -1] [1 0] ]
-      heading = std::make_pair(-1 * heading.second, 1 * heading.first);
+      waypoint = std::make_pair(-1 * waypoint.second, 1 * waypoint.first);
     }
     if (line == "L180" || line == "R180") {
-      heading = std::make_pair(-1 * heading.first, -1 * heading.second);
+      waypoint = std::make_pair(-1 * waypoint.first, -1 * waypoint.second);
     }
   }
   std::cout << "Manhattan distance = "
