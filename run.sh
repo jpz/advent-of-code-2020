@@ -4,9 +4,11 @@
 # (source: https://stackoverflow.com/a/246128)
 DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" >/dev/null 2>&1 && pwd )"
 
-for file in "$DIR/build/bin/"*
+cd "$DIR/data"
+
+for filename in $(ls "$DIR/build/bin/")
 do
-    echo "$(basename ${file}):"
-    (cd "${DIR}/data"; "$file")
-    echo "" #-----------"; echo ""
+    echo $filename
+    "$DIR/build/bin/$filename"
+    echo ""
 done | tee outputs.txt

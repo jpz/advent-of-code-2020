@@ -16,8 +16,6 @@ int main() {
     joltages.insert(i);
   }
 
-  std::cout << joltages.size() << std::endl;
-
   // number of ways to reach joltage
   auto ways = std::map<int, long>{};
 
