@@ -76,3 +76,6 @@ Earliest bus is 601 with waiting time 7, product = 4207
 day13b
 digit 725850285300475
 
+day14a
+Sum of memory = 10050490168421
+
