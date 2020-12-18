@@ -54,7 +54,7 @@ int main() {
     // Let us take for instance digits 3 and 7 with offsets of 0 and 1,
     // e.g. A = 3, B = 7, X = 0, Y = 1
     //
-    // We are searching for solutions of 3k + 0 = 7j - 1, for
+    // We are searching for solutions of Ak + X = Bj - Y, for
     // the lowest value of k.
     //
     // We can find a solution for k = 2.
@@ -71,7 +71,7 @@ int main() {
     // So, generalising, coprime A,B with offsets (X,Y) has a minimal
     // solution kA + X = jB - Y for lowest k >= 1
     //
-    // This generates a new sequence of length AB with offset j.A + X
+    // This generates a new sequence repeating every AB with offset j.A + X
     //
     auto j = 1l;
     while ((j * A + X + Y) % B) {
