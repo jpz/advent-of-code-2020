@@ -34,7 +34,7 @@ int main() {
     pos++;
   }
 
-  std::cout << "30000000th digit = " << seq[30000000-1] << std::endl;
+  std::cout << "30000000th digit = " << seq[30000000 - 1] << std::endl;
 
   return 0;
 }

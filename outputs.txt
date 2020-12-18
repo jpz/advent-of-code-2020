@@ -88,3 +88,6 @@ day15a
 day15b
 30000000th digit = 1876406
 
+day16a
+ticket scanning error rate = 25895
+
