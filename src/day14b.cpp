@@ -2,8 +2,8 @@
 #include <fstream>
 #include <iostream>
 #include <map>
-#include <vector>
 #include <string>
+#include <vector>
 
 std::pair<uint64_t, uint64_t> extract_masks(const std::string &s) {
   auto floating_mask = 0ul;
@@ -20,15 +20,13 @@ std::pair<uint64_t, uint64_t> extract_masks(const std::string &s) {
   return std::make_pair(on_mask, floating_mask);
 }
 
-template<typename T>
-int location_of_nth_bit(T value, int n) {
+template <typename T> int location_of_nth_bit(T value, int n) {
   auto position = 0;
-  while(value && n) {
+  while (value && n) {
     if (value & 1) {
       if (n == 1) {
         return position;
-      }
-      else {
+      } else {
         n--;
       }
     }
@@ -38,11 +36,11 @@ int location_of_nth_bit(T value, int n) {
   return -1;
 }
 
-void set_memory(std::map<uint64_t, uint64_t> &memory, uint64_t address, uint64_t value, uint64_t floating_mask) {
+void set_memory(std::map<uint64_t, uint64_t> &memory, uint64_t address,
+                uint64_t value, uint64_t floating_mask) {
   if (floating_mask == 0) {
     memory[address] = value;
-  }
-  else {
+  } else {
     auto loc = location_of_nth_bit(floating_mask, 1);
     auto bit = 1ul << loc;
     floating_mask = floating_mask & ~bit;
@@ -68,7 +66,7 @@ int main() {
     } else {
       auto address = std::stoul(buffer.data() + buffer.find('[') + 1);
       auto value = std::stoul(buffer.data() + buffer.find('=') + 2);
-      
+
       // zero bits related to floating_mask
       address = address & ~(floating_mask) | on_mask;
 

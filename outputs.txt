@@ -82,3 +82,6 @@ Sum of memory = 10050490168421
 day14b
 Sum of memory = 2173858456958
 
+day15a
+2020th digit = 763
+
