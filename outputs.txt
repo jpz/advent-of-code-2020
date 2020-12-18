@@ -91,3 +91,6 @@ day15b
 day16a
 ticket scanning error rate = 25895
 
+day16b
+departure product = 5865723727753
+

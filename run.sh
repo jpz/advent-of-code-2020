@@ -8,7 +8,11 @@ cd "$DIR/data"
 
 for filename in $(ls "$DIR/build/bin/")
 do
-    echo $filename
-    "$DIR/build/bin/$filename"
-    echo ""
+    #if [[ $filename != day15b ]]
+    if [[ 1 == 1 ]]
+    then
+        echo $filename
+        "$DIR/build/bin/$filename"
+        echo ""
+    fi
 done | tee ../outputs.txt
