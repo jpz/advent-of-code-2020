@@ -11,4 +11,4 @@ do
     echo $filename
     "$DIR/build/bin/$filename"
     echo ""
-done | tee outputs.txt
+done | tee ../outputs.txt
