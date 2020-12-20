@@ -94,3 +94,6 @@ ticket scanning error rate = 25895
 day16b
 departure product = 5865723727753
 
+day17a
+Active after 6 cycles = 298
+
