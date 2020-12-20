@@ -88,7 +88,6 @@ public:
 };
 
 int main() {
-  auto set = std::unordered_set<int>{};
   auto str = std::ifstream{"data17.txt"};
   auto line = std::string{};
   auto space_map = SpaceMap{};
@@ -129,7 +128,7 @@ int main() {
     }
     space_map = space_map_new;
   }
- 
+
   std::cout << "Active after 6 cycles = " << space_map.active_count()
             << std::endl;
 

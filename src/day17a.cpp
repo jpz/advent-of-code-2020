@@ -93,7 +93,6 @@ std::ostream &operator<<(std::ostream &stream, const SpaceMap &map) {
 }
 
 int main() {
-  auto set = std::unordered_set<int>{};
   auto str = std::ifstream{"data17.txt"};
   auto line = std::string{};
   auto space_map = SpaceMap{};
