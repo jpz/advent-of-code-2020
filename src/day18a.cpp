@@ -56,7 +56,7 @@ int main() {
   auto str = std::ifstream{"data18.txt"};
   auto line = std::string{};
 
-  long sum = 0;
+  auto sum = 0ul;
   while (std::getline(str, line)) {
     auto ss = std::stringstream{line};
     auto result = evaluate(ss);

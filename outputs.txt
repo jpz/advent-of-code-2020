@@ -103,3 +103,6 @@ Active after 6 cycles = 1792
 day18a
 sum of equations = 45840336521334
 
+day18b
+sum of equations = 328920644404583
+
