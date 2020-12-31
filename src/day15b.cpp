@@ -5,36 +5,36 @@
 #include <vector>
 
 int main() {
-  auto seq = std::vector<long>{};
-  auto last_loc = std::unordered_map<long, long>{};
+  auto iterations = 30000000;
+  auto last_loc = std::vector<int>(iterations, -1);
   auto str = std::ifstream{"data15.txt"};
-  auto i = 0;
+  auto number = 0;
+  auto last_number = 0;
   auto pos = 0;
 
-  while (str >> i) {
-    seq.push_back(i);
+  while (str >> number) {
     auto ch = ' ';
     str >> ch; // eat the comma character if it is there
     if (pos > 0) {
-      last_loc[seq[pos - 1]] = pos - 1;
+      last_loc[last_number] = pos - 1;
     }
+    last_number = number;
     pos++;
   }
 
-  while (pos < 30000000) {
-    auto number = 0;
-    auto it = last_loc.find(seq[pos - 1]);
-    if (it == last_loc.end()) {
+  while (pos < iterations) {
+    auto last = last_loc[last_number];
+    if (last == -1) {
       number = 0;
     } else {
-      number = pos - 1 - it->second;
+      number = pos - 1 - last;
     }
-    seq.push_back(number);
-    last_loc[seq[pos - 1]] = pos - 1;
+    last_loc[last_number] = pos - 1;
+    last_number = number;
     pos++;
   }
 
-  std::cout << "30000000th digit = " << seq[30000000 - 1] << std::endl;
+  std::cout << iterations << "th digit = " << last_number << std::endl;
 
   return 0;
 }
