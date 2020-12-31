@@ -6,7 +6,7 @@
 
 struct Token {
   bool isValue; // is true if value is integer value, is false if it's a symbol
-  long value;   
+  long value;
 };
 
 using TokenList = std::vector<Token>;
@@ -68,7 +68,8 @@ bool reduce_addition(TokenList &tokens) {
 
 bool reduce_multiplication(TokenList &tokens) {
   for (auto i = 0; i + 2 < tokens.size(); i++) {
-    // If we see number * number and the symbols before and after are not plus we can do this reduction
+    // If we see number * number and the symbols before and after are not plus
+    // we can do this reduction
     if (tokens[i].isValue && !tokens[i + 1].isValue &&
         tokens[i + 1].value == '*' && tokens[i + 2].isValue &&
         (i == 0 || tokens[i - 1].value != '+') &&
@@ -102,7 +103,8 @@ TokenList reduce(TokenList tokens) {
   return tokens;
 }
 
-// Rather and build an expression tree to solve this problem, we just apply reductions to the token list using some basic rules
+// Rather and build an expression tree to solve this problem, we just apply
+// reductions to the token list using some basic rules
 int main() {
   auto str = std::ifstream{"data18.txt"};
   auto line = std::string{};
