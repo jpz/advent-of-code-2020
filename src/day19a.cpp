@@ -1,4 +1,5 @@
 #include <algorithm>
+#include <cassert>
 #include <fstream>
 #include <iostream>
 #include <sstream>
@@ -9,8 +10,8 @@
 #include <vector>
 
 // Rule:
-//  node_id and one or more NodeSubRule (any of which are valid)
-// NodeSubRule: either a sequence of node_ids, or a string (typically "a" or
+//  rule_id and one or more SubRule (any of which are valid)
+// SubRule: either a sequence of rule_ids, or a string (typically "a" or
 // "b") e.g. 1: 2 3 | 4 5 6
 
 using RuleId = int;
@@ -98,24 +99,37 @@ using RuleContainer = std::unordered_map<RuleId, Rule>;
 using RuleStringContainer =
     std::unordered_map<RuleId, std::unordered_set<std::string>>;
 
+bool contains(const std::string &s, const std::string &suffix) {
+  return s.find(suffix) != std::string::npos;
+}
+
 std::unordered_set<std::string>
 compute_strings(const Rule &rule,
-                const RuleStringContainer &ruleStringContainer) {
+                const RuleStringContainer &rule_container_string,
+                const std::string &target) {
   auto strings = std::unordered_set<std::string>{};
   for (auto &sub_rule : rule.sub_rules) {
     if (std::holds_alternative<std::string>(sub_rule)) {
-      strings.insert(std::get<std::string>(sub_rule));
+      auto &s = std::get<std::string>(sub_rule);
+      if (contains(target, s)) {
+        strings.insert(s);
+      }
     } else {
       auto &rule_id_sequence = std::get<RuleIdSequence>(sub_rule);
       if (rule_id_sequence.size() == 1) {
-        for (auto &s : ruleStringContainer.at(rule_id_sequence[0])) {
-          strings.insert(s);
+        for (auto &s : rule_container_string.at(rule_id_sequence[0])) {
+          if (contains(target, s)) {
+            strings.insert(s);
+          }
         }
       }
       if (rule_id_sequence.size() == 2) {
-        for (auto &s1 : ruleStringContainer.at(rule_id_sequence[0])) {
-          for (auto &s2 : ruleStringContainer.at(rule_id_sequence[1])) {
-            strings.insert(s1 + s2);
+        for (auto &s1 : rule_container_string.at(rule_id_sequence[0])) {
+          for (auto &s2 : rule_container_string.at(rule_id_sequence[1])) {
+            auto s = s1 + s2;
+            if (contains(target, s)) {
+              strings.insert(s);
+            }
           }
         }
       }
@@ -124,13 +138,7 @@ compute_strings(const Rule &rule,
   return strings;
 }
 
-// Rather and build an expression tree to solve this problem, we just apply
-// reductions to the token list using some basic rules
-int main() {
-  auto str = std::ifstream{"data19.txt"};
-
-  auto rules = read_rules(str);
-
+bool match_exists(const std::vector<Rule> &rules, const std::string &target) {
   auto rule_map = RuleContainer{};
   auto unprocessed_rules = std::unordered_set<RuleId>{};
   for (auto &rule : rules) {
@@ -138,7 +146,9 @@ int main() {
     unprocessed_rules.insert(rule.rule_id);
   }
 
-  auto ruleStrings = RuleStringContainer{};
+  // build up a list of strings for each rule
+  // omit any strings which cannot exist in the target
+  auto rule_strings = RuleStringContainer{};
 
   while (unprocessed_rules.size()) {
     for (auto &rule_id : unprocessed_rules) {
@@ -149,21 +159,31 @@ int main() {
           // no-op
         } else {
           for (auto rule_id : std::get<RuleIdSequence>(sub_rule)) {
-            if (ruleStrings.find(rule_id) == ruleStrings.end()) {
+            if (rule_strings.find(rule_id) == rule_strings.end()) {
               computable = false;
             }
           }
         }
       }
       if (computable) {
-        ruleStrings[rule.rule_id] = compute_strings(rule, ruleStrings);
+        auto strings = compute_strings(rule, rule_strings, target);
+        rule_strings[rule.rule_id] = strings;
         unprocessed_rules.erase(rule_id);
         break; // start for loop again
       }
     }
   }
 
-  auto solutions_for_zero = ruleStrings[0];
+  auto &solutions_for_zero = rule_strings[0];
+  return solutions_for_zero.find(target) != solutions_for_zero.end();
+}
+
+// Rather and build an expression tree to solve this problem, we just apply
+// reductions to the token list using some basic rules
+int main() {
+  auto str = std::ifstream{"data19.txt"};
+
+  auto rules = read_rules(str);
 
   auto line = std::string{};
   auto count = 0;
@@ -172,7 +192,7 @@ int main() {
     if (line.size() == 0) {
       continue;
     }
-    count += (solutions_for_zero.find(line) != solutions_for_zero.end());
+    count += match_exists(rules, line);
   }
 
   std::cout << "matches = " << count << std::endl;

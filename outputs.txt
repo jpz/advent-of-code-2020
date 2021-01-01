@@ -106,3 +106,6 @@ sum of equations = 45840336521334
 day18b
 sum of equations = 328920644404583
 
+day19a
+matches = 226
+
