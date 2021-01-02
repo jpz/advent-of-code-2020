@@ -122,6 +122,17 @@ int main() {
 
   auto rules = read_rules(str);
 
+  // update rule 8 and rule 11
+  auto &rule8 = *(std::find_if(rules.begin(), rules.end(),
+                              [](auto &r) { return r.rule_id == 8; }));
+  auto &rule11 = *(std::find_if(rules.begin(), rules.end(),
+                                [](auto &r) { return r.rule_id == 11; }));
+
+  rule8.sub_rules.push_back(RuleIdSequence{42});
+  rule8.sub_rules.push_back(RuleIdSequence{42, 8});
+  rule11.sub_rules.push_back(RuleIdSequence{42, 31});
+  rule11.sub_rules.push_back(RuleIdSequence{42, 11, 31});
+
   auto rule_map = RuleContainer{};
   for (auto &rule : rules) {
     rule_map[rule.rule_id] = rule;

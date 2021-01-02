@@ -109,3 +109,6 @@ sum of equations = 328920644404583
 day19a
 matches = 226
 
+day19b
+matches = 355
+
