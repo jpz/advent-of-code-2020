@@ -99,83 +99,45 @@ using RuleContainer = std::unordered_map<RuleId, Rule>;
 using RuleStringContainer =
     std::unordered_map<RuleId, std::unordered_set<std::string>>;
 
-bool contains(const std::string &s, const std::string &suffix) {
-  return s.find(suffix) != std::string::npos;
+
+bool starts_with(const std::string &s, const std::string &prefix) {
+  return s.size() >= prefix.size() && s.find(prefix) == 0;
 }
 
+
+// Applies the rule to some set of strings, and returns a set of all
+// possible string remainders when all rule possibilities are applied.
+// Note that while the order of the algorithm seems to grow geometrically
+// with recursive descent, the targets implicitly restrict the computation.
 std::unordered_set<std::string>
-compute_strings(const Rule &rule,
-                const RuleStringContainer &rule_container_string,
-                const std::string &target) {
-  auto strings = std::unordered_set<std::string>{};
+consume(int rule_id, const RuleContainer &rule_map,
+        const std::unordered_set<std::string> &targets) {
+  if (targets.size() == 0) {
+    return {};
+  }
+  auto &rule = rule_map.at(rule_id);
+  auto remainders = std::unordered_set<std::string>{};
   for (auto &sub_rule : rule.sub_rules) {
     if (std::holds_alternative<std::string>(sub_rule)) {
-      auto &s = std::get<std::string>(sub_rule);
-      if (contains(target, s)) {
-        strings.insert(s);
+      auto prefix = std::get<std::string>(sub_rule);
+      for (auto &target : targets) {
+        if (starts_with(target, prefix)) {
+          remainders.insert(target.substr(prefix.size()));
+        }
       }
     } else {
       auto &rule_id_sequence = std::get<RuleIdSequence>(sub_rule);
-      if (rule_id_sequence.size() == 1) {
-        for (auto &s : rule_container_string.at(rule_id_sequence[0])) {
-          if (contains(target, s)) {
-            strings.insert(s);
-          }
+      auto new_targets = targets;
+      for (auto rule_id : std::get<RuleIdSequence>(sub_rule)) {
+        if (new_targets.size() == 0) {
+          break;
         }
+        new_targets = consume(rule_id, rule_map, new_targets);
       }
-      if (rule_id_sequence.size() == 2) {
-        for (auto &s1 : rule_container_string.at(rule_id_sequence[0])) {
-          for (auto &s2 : rule_container_string.at(rule_id_sequence[1])) {
-            auto s = s1 + s2;
-            if (contains(target, s)) {
-              strings.insert(s);
-            }
-          }
-        }
-      }
+      remainders.insert(new_targets.begin(), new_targets.end());
     }
   }
-  return strings;
-}
-
-bool match_exists(const std::vector<Rule> &rules, const std::string &target) {
-  auto rule_map = RuleContainer{};
-  auto unprocessed_rules = std::unordered_set<RuleId>{};
-  for (auto &rule : rules) {
-    rule_map[rule.rule_id] = rule;
-    unprocessed_rules.insert(rule.rule_id);
-  }
-
-  // build up a list of strings for each rule
-  // omit any strings which cannot exist in the target
-  auto rule_strings = RuleStringContainer{};
-
-  while (unprocessed_rules.size()) {
-    for (auto &rule_id : unprocessed_rules) {
-      auto &rule = rule_map[rule_id];
-      auto computable = true;
-      for (auto &sub_rule : rule.sub_rules) {
-        if (std::holds_alternative<std::string>(sub_rule)) {
-          // no-op
-        } else {
-          for (auto rule_id : std::get<RuleIdSequence>(sub_rule)) {
-            if (rule_strings.find(rule_id) == rule_strings.end()) {
-              computable = false;
-            }
-          }
-        }
-      }
-      if (computable) {
-        auto strings = compute_strings(rule, rule_strings, target);
-        rule_strings[rule.rule_id] = strings;
-        unprocessed_rules.erase(rule_id);
-        break; // start for loop again
-      }
-    }
-  }
-
-  auto &solutions_for_zero = rule_strings[0];
-  return solutions_for_zero.find(target) != solutions_for_zero.end();
+  return remainders;
 }
 
 // Rather and build an expression tree to solve this problem, we just apply
@@ -185,6 +147,11 @@ int main() {
 
   auto rules = read_rules(str);
 
+  auto rule_map = RuleContainer{};
+  for (auto &rule : rules) {
+    rule_map[rule.rule_id] = rule;
+  }
+
   auto line = std::string{};
   auto count = 0;
 
@@ -192,7 +159,11 @@ int main() {
     if (line.size() == 0) {
       continue;
     }
-    count += match_exists(rules, line);
+    auto remainders =
+        consume(0, rule_map, std::unordered_set<std::string>{line});
+    if (remainders.find("") != remainders.end()) {
+      count++;
+    }
   }
 
   std::cout << "matches = " << count << std::endl;
