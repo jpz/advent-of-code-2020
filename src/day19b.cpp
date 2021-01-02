@@ -74,11 +74,9 @@ using RuleContainer = std::unordered_map<RuleId, Rule>;
 using RuleStringContainer =
     std::unordered_map<RuleId, std::unordered_set<std::string>>;
 
-
 bool starts_with(const std::string &s, const std::string &prefix) {
   return s.size() >= prefix.size() && s.find(prefix) == 0;
 }
-
 
 // Applies the rule to some set of strings, and returns a set of all
 // possible string remainders when all rule possibilities are applied.
@@ -110,7 +108,7 @@ consume(int rule_id, const RuleContainer &rule_map,
         new_targets = consume(rule_id, rule_map, new_targets);
       }
       remainders.insert(new_targets.begin(), new_targets.end());
-    } 
+    }
   }
   return remainders;
 }
@@ -124,7 +122,7 @@ int main() {
 
   // update rule 8 and rule 11
   auto &rule8 = *(std::find_if(rules.begin(), rules.end(),
-                              [](auto &r) { return r.rule_id == 8; }));
+                               [](auto &r) { return r.rule_id == 8; }));
   auto &rule11 = *(std::find_if(rules.begin(), rules.end(),
                                 [](auto &r) { return r.rule_id == 11; }));
 

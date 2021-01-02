@@ -112,3 +112,7 @@ matches = 226
 day19b
 matches = 355
 
+day20a
+number of tiles 144
+product of corner tile ids = 174206308298779
+
